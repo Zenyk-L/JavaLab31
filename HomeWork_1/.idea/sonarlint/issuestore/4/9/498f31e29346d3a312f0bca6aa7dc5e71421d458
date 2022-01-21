@@ -1,0 +1,6 @@
+
+p
+java:S1450	"TRemove the "beanB" field and declare it as a local variable in the relevant methods.(¦¹Ì%8Å³ŒÀç/
+S	java:S106"9Replace this use of System.out or System.err by a logger.(¿´¥úüÿÿÿÿ
+E
+java:S1068	")Remove this unused "beanB" private field.(¦¹Ì%8Ó³ŒÀç/
