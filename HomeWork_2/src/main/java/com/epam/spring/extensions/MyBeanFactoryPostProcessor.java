@@ -1,4 +1,4 @@
-package com.epam.spring.beans;
+package com.epam.spring.extensions;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;

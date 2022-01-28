@@ -10,12 +10,12 @@ public class BeanA extends DefaultBean implements InitializingBean, DisposableBe
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         System.out.println("Inside " + name + " method InitializingBean.afterPropertiesSet()");
     }
 
     @Override
-    public void destroy() throws Exception {
+    public void destroy() {
         System.out.println("Inside " + name + " method DisposableBean.destroy()");
     }
 

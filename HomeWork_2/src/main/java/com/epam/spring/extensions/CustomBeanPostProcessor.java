@@ -1,4 +1,4 @@
-package com.epam.spring.beans;
+package com.epam.spring.extensions;
 
 import com.epam.spring.validator.MyValidator;
 import org.springframework.beans.BeansException;

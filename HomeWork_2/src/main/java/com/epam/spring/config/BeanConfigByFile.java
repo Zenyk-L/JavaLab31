@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
 @Configuration
-@PropertySource("application.properties")
+@PropertySource("classpath:application.properties")
 public class BeanConfigByFile {
 
     @Value("${beanB.name}")

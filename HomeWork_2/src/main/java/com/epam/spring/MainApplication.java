@@ -12,7 +12,7 @@ public class MainApplication {
 		SpringApplication.run(MainApplication.class, args);
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(BeanConfigByManual.class);
 		for (String beanName: context.getBeanDefinitionNames() ) {
-			System.out.println(context.getBean(beanName));
+			System.out.println(context.getBeanDefinition(beanName));
 		}
 		context.close();
 
