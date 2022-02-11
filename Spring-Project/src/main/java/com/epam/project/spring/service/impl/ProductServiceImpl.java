@@ -30,7 +30,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> listProduct() {
         log.info("Get All products");
-        return productRepository.listProduct().stream().map(product -> ProductMapper.INSTANCE.productToProductDto(product)).collect(Collectors.toList());
+        return productRepository.listProduct()
+                .stream()
+                .map(ProductMapper.INSTANCE::productToProductDto)
+                .collect(Collectors.toList());
     }
 
     @Override

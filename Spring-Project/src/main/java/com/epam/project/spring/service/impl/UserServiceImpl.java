@@ -1,6 +1,8 @@
 package com.epam.project.spring.service.impl;
 
 import com.epam.project.spring.dto.UserDto;
+import com.epam.project.spring.dto.UserWithPasswordDto;
+import com.epam.project.spring.mapper.UserMapper;
 import com.epam.project.spring.model.User;
 import com.epam.project.spring.repository.UserRepository;
 import com.epam.project.spring.service.UserService;
@@ -22,27 +24,32 @@ public class UserServiceImpl implements UserService {
     public UserDto getUser(String email) {
         log.info("Get user with email {}", email);
         User user = userRepository.getUser(email);
-        return mapUserToUserDto(user);
+        return UserMapper.INSTANCE.mapUserToUserDto(user);
     }
 
     @Override
     public List<UserDto> listUsers() {
         log.info("Get All users");
-        return userRepository.listUsers().stream().map(this::mapUserToUserDto).collect(Collectors.toList());
+        return userRepository.listUsers()
+                .stream()
+                .map(UserMapper.INSTANCE::mapUserToUserDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public UserDto createUser(User user) {
-        log.info("Create user with email {}", user.getEmail());
+    public UserDto createUser(UserWithPasswordDto userWithPasswordDto) {
+        log.info("Create user with email {}", userWithPasswordDto.getEmail());
+        User user = UserMapper.INSTANCE.mapUserWithPasswordDtoToUser(userWithPasswordDto);
         user = userRepository.createUser(user);
-        return mapUserToUserDto(user);
+        return UserMapper.INSTANCE.mapUserToUserDto(user);
     }
 
     @Override
-    public UserDto updateUser(String email, User user) {
+    public UserDto updateUser(String email, UserWithPasswordDto userWithPasswordDto) {
         log.info("Update user with email {}", email);
+        User user = UserMapper.INSTANCE.mapUserWithPasswordDtoToUser(userWithPasswordDto);
         user = userRepository.updateUser(email, user);
-        return mapUserToUserDto(user);
+        return UserMapper.INSTANCE.mapUserToUserDto(user);
     }
 
     @Override
@@ -51,13 +58,14 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteUser(email);
     }
 
-    private UserDto mapUserToUserDto(User user) {
-        return UserDto.builder()
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .blocked(user.isBlocked())
-                .build();
-    }
+//    private UserDto mapUserToUserDto(User user) {
+//        return UserDto.builder()
+//                .firstName(user.getFirstName())
+//                .lastName(user.getLastName())
+//                .email(user.getEmail())
+//                .role(user.getRole()
+//                        .toString())
+//                .blocked(user.isBlocked())
+//                .build();
+//    }
 }

@@ -2,6 +2,7 @@ package com.epam.project.spring.repository.impl;
 
 import com.epam.project.spring.model.Product;
 import com.epam.project.spring.repository.ProductRepository;
+import com.epam.project.spring.service.exeption.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -11,11 +12,16 @@ import java.util.List;
 public class ProductRepositoryImpl implements ProductRepository {
 
     private final List<Product> listProduct = new ArrayList<>();
+
     private static int idCount = 1;
 
     @Override
     public Product getProduct(Integer id) {
-        return listProduct.stream().filter(product -> product.getId().equals(id)).findFirst().orElseThrow(() -> new RuntimeException("Product not found"));
+        return listProduct.stream()
+                .filter(product -> product.getId()
+                        .equals(id))
+                .findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
     }
 
     @Override
@@ -32,18 +38,20 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Product updateProduct(Integer id, Product product) {
-        boolean isDeleted = listProduct.removeIf(p -> p.getId().equals(id));
+        boolean isDeleted = listProduct.removeIf(p -> p.getId()
+                .equals(id));
         if (isDeleted) {
             listProduct.add(product);
         } else {
-            throw new RuntimeException("Product is not found!");
+            throw new EntityNotFoundException("Product is not found!");
         }
         return product;
     }
 
     @Override
     public void deleteProduct(Integer id) {
-        listProduct.removeIf(product -> product.getId().equals(id));
+        listProduct.removeIf(product -> product.getId()
+                .equals(id));
     }
 
 }

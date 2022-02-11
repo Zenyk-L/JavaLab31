@@ -1,11 +1,11 @@
-package com.epam.project.spring.model;
+package com.epam.project.spring.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class User {
+public class UserWithPasswordDto {
 
     private Integer id;
 
@@ -17,7 +17,8 @@ public class User {
 
     private String password;
 
-    private UserRole role;
+    private String role;
 
     private boolean blocked;
+
 }
