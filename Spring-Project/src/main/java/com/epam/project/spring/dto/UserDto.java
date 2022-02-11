@@ -1,6 +1,5 @@
 package com.epam.project.spring.dto;
 
-import com.epam.project.spring.model.UserRole;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,10 +7,16 @@ import lombok.Data;
 @Builder
 public class UserDto {
 
+    private Integer id;
+
     private String firstName;
+
     private String lastName;
+
     private String email;
-    private UserRole role;
+
+    private String role;
+
     private boolean blocked;
 
 }

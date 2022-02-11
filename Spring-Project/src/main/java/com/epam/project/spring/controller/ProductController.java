@@ -9,38 +9,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/product")
-    public List<ProductDto> getAllProduct(){
+    @GetMapping
+    public List<ProductDto> getAllProduct() {
         return productService.listProduct();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/product/{id}")
-    public ProductDto getProduct(@PathVariable Integer id){
+    @GetMapping("/{id}")
+    public ProductDto getProduct(@PathVariable Integer id) {
         return productService.getProduct(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/product")
-    public ProductDto createProduct(@RequestBody ProductDto productDto){
+    @PostMapping
+    public ProductDto createProduct(@RequestBody ProductDto productDto) {
         return productService.createProduct(productDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/product/{id}")
-    public ProductDto updateProduct(@PathVariable Integer id, @RequestBody ProductDto productDto){
-        return productService.updateProduct(id,productDto);
+    @PutMapping("/{id}")
+    public ProductDto updateProduct(@PathVariable Integer id, @RequestBody ProductDto productDto) {
+        return productService.updateProduct(id, productDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/product/{id}")
-    public void delete(@PathVariable Integer id){
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
         productService.deleteProduct(id);
     }
 
