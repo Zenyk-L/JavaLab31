@@ -1,6 +1,7 @@
 package com.epam.project.spring.repository.impl;
 
 import com.epam.project.spring.model.User;
+import com.epam.project.spring.model.UserRole;
 import com.epam.project.spring.repository.UserRepository;
 import com.epam.project.spring.service.exeption.EntityAlreadyExistException;
 import com.epam.project.spring.service.exeption.EntityNotFoundException;
@@ -50,13 +51,16 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User updateUser(String email, User user) {
         AtomicReference<Integer> userId = new AtomicReference<>();
+        final String[] userRole = new String[1];
         boolean isDeleted = listUser.removeIf(u -> {
             userId.set(u.getId());
+            userRole[0] = u.getRole().toString();
             return u.getEmail()
                     .equals(email);
         });
         if (isDeleted) {
             user.setId(userId.get());
+            user.setRole(UserRole.valueOf(userRole[0]));
             listUser.add(user);
         } else {
             throw new EntityNotFoundException("User is not found!");
