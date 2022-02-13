@@ -23,7 +23,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .filter(user -> user.getEmail()
                         .equals(email))
                 .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User", email));
     }
 
     @Override
@@ -33,35 +33,31 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User createUser(User user) {
-        boolean userNotExist = listUser.stream()
-                .filter(u -> u.getEmail()
-                        .equals(user.getEmail()))
+        return listUser.stream()
+                .filter(u -> u.getEmail().equals(user.getEmail()))
                 .findFirst()
-                .isEmpty();
-        if (userNotExist) {
-            user.setId(idCount++);
-            listUser.add(user);
-        } else {
-            throw new EntityAlreadyExistException("User with email " + user.getEmail() + " already exist");
-        }
-        return user;
+                .orElseGet(() -> {
+                    user.setId(idCount++);
+                    listUser.add(user);
+                    return user;
+                });
     }
 
     @Override
     public User updateUser(String email, User user) {
-        AtomicReference<Integer> userId = new AtomicReference<>();
-        boolean isDeleted = listUser.removeIf(u -> {
-            userId.set(u.getId());
-            return u.getEmail()
-                    .equals(email);
-        });
-        if (isDeleted) {
-            user.setId(userId.get());
-            listUser.add(user);
-        } else {
-            throw new EntityNotFoundException("User is not found!");
-        }
-        return user;
+
+        return listUser.stream()
+                .filter(u -> u.getEmail()
+                        .equals(email))
+                .findFirst()
+                .map(u -> {
+                    user.setId(u.getId());
+                    user.setEmail(email);
+                    listUser.remove(u);
+                    listUser.add(user);
+                    return user;
+                })
+                .orElseThrow(() -> new EntityNotFoundException("User", email));
     }
 
     @Override

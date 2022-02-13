@@ -49,7 +49,6 @@ public class ProductServiceImpl implements ProductService {
         log.info("Update product with id {}", id);
         Product product = ProductMapper.INSTANCE.productDtoToProduct(productDto);
         product = productRepository.updateProduct(id, product);
-        product.setId(id);
         return ProductMapper.INSTANCE.productToProductDto(product);
     }
 
