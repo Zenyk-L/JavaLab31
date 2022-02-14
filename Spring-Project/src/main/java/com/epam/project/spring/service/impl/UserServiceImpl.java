@@ -59,14 +59,4 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteUser(email);
     }
 
-//    private UserDto mapUserToUserDto(User user) {
-//        return UserDto.builder()
-//                .firstName(user.getFirstName())
-//                .lastName(user.getLastName())
-//                .email(user.getEmail())
-//                .role(user.getRole()
-//                        .toString())
-//                .blocked(user.isBlocked())
-//                .build();
-//    }
 }

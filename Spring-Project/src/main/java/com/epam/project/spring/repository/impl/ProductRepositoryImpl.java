@@ -21,7 +21,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .filter(product -> product.getId()
                         .equals(id))
                 .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Product", String.valueOf(id)));
     }
 
     @Override
@@ -38,14 +38,17 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Product updateProduct(Integer id, Product product) {
-        boolean isDeleted = listProduct.removeIf(p -> p.getId()
-                .equals(id));
-        if (isDeleted) {
-            listProduct.add(product);
-        } else {
-            throw new EntityNotFoundException("Product is not found!");
-        }
-        return product;
+        return listProduct.stream()
+                .filter(p -> p.getId()
+                        .equals(id))
+                .findFirst()
+                .map(p -> {
+                    listProduct.remove(p);
+                    product.setId(id);
+                    listProduct.add(product);
+                    return product;
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Product", String.valueOf(id)));
     }
 
     @Override
