@@ -26,7 +26,7 @@ public class UserWithPasswordDto {
 
     @Email
     @NotBlank(message = "email shouldn't be blank", groups = OnCreate.class)
-    @Null(message = "email shouldn't be absent", groups = OnUpdate.class)
+    @Null(message = "email should be absent", groups = OnUpdate.class)
     private String email;
 
     @NotBlank(message = "password shouldn't be blank", groups = OnCreate.class)

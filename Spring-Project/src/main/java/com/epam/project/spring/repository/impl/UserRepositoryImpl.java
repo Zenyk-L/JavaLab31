@@ -2,13 +2,11 @@ package com.epam.project.spring.repository.impl;
 
 import com.epam.project.spring.model.User;
 import com.epam.project.spring.repository.UserRepository;
-import com.epam.project.spring.service.exeption.EntityAlreadyExistException;
 import com.epam.project.spring.service.exeption.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 public class UserRepositoryImpl implements UserRepository {
