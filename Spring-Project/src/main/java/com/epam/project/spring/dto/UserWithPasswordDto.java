@@ -1,5 +1,6 @@
 package com.epam.project.spring.dto;
 
+import com.epam.project.spring.controller.validation.ValidRole;
 import com.epam.project.spring.dto.goup.OnCreate;
 import com.epam.project.spring.dto.goup.OnUpdate;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -33,8 +34,7 @@ public class UserWithPasswordDto {
     @NotEmpty(message = "password shouldn't be empty", groups = OnUpdate.class)
     private String password;
 
-    @NotBlank(message = "role shouldn't be blank", groups = OnCreate.class)
-    @Null(message = "role should be absent", groups = OnUpdate.class)
+    @ValidRole
     private String role;
 
     @AssertFalse(message = "blocked shouldn't be true", groups = OnCreate.class)
