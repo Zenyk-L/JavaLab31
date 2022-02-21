@@ -11,8 +11,7 @@ public class RoleValidator implements ConstraintValidator<ValidRole, String> {
     @Override
     public boolean isValid(String role, ConstraintValidatorContext constraintValidatorContext) {
         return Arrays.stream(UserRole.values())
-                .filter(userRole -> userRole.toString().equals(role))
-                .findFirst()
-                .isPresent();
+                .anyMatch(userRole -> userRole.toString().equals(role));
+
     }
 }

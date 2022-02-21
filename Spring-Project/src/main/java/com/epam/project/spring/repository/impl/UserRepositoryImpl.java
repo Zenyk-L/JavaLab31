@@ -2,6 +2,7 @@ package com.epam.project.spring.repository.impl;
 
 import com.epam.project.spring.model.User;
 import com.epam.project.spring.repository.UserRepository;
+import com.epam.project.spring.service.exeption.EntityAlreadyExistException;
 import com.epam.project.spring.service.exeption.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -31,14 +32,16 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User createUser(User user) {
-        return listUser.stream()
-                .filter(u -> u.getEmail().equals(user.getEmail()))
-                .findFirst()
-                .orElseGet(() -> {
-                    user.setId(idCount++);
-                    listUser.add(user);
-                    return user;
-                });
+
+        boolean userAlreadyExist = listUser.stream()
+                .anyMatch(u -> u.getEmail().equals(user.getEmail()));
+        if (userAlreadyExist) {
+            throw new EntityAlreadyExistException("User", user.getEmail());
+        } else {
+            user.setId(idCount++);
+            listUser.add(user);
+        }
+        return user;
     }
 
     @Override

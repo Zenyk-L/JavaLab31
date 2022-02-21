@@ -21,36 +21,36 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDto getUser(String email) {
+    public UserWithPasswordDto getUser(String email) {
         log.info("Get user with email {}", email);
         User user = userRepository.getUser(email);
-        return UserMapper.INSTANCE.mapUserToUserDto(user);
+        return UserMapper.INSTANCE.mapUserToUserWithPasswordDto(user);
     }
 
     @Override
-    public List<UserDto> listUsers() {
+    public List<UserWithPasswordDto> listUsers() {
         log.info("Get All users");
         return userRepository.listUsers()
                 .stream()
-                .map(UserMapper.INSTANCE::mapUserToUserDto)
+                .map(UserMapper.INSTANCE::mapUserToUserWithPasswordDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public UserDto createUser(UserWithPasswordDto userWithPasswordDto) {
+    public UserWithPasswordDto createUser(UserWithPasswordDto userWithPasswordDto) {
         log.info("Create user with email {}", userWithPasswordDto.getEmail());
         User user = UserMapper.INSTANCE.mapUserWithPasswordDtoToUser(userWithPasswordDto);
         user = userRepository.createUser(user);
-        return UserMapper.INSTANCE.mapUserToUserDto(user);
+        return UserMapper.INSTANCE.mapUserToUserWithPasswordDto(user);
     }
 
     @Override
-    public UserDto updateUser(String email, UserWithPasswordDto userWithPasswordDto) {
+    public UserWithPasswordDto updateUser(String email, UserWithPasswordDto userWithPasswordDto) {
         log.info("Update user with email {}", email);
         User user = UserMapper.INSTANCE.mapUserWithPasswordDtoToUser(userWithPasswordDto);
         user.setEmail(email);
         user = userRepository.updateUser(email, user);
-        return UserMapper.INSTANCE.mapUserToUserDto(user);
+        return UserMapper.INSTANCE.mapUserToUserWithPasswordDto(user);
     }
 
     @Override

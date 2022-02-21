@@ -16,6 +16,6 @@ public interface UserMapper {
     User mapUserWithPasswordDtoToUser(UserWithPasswordDto userWithPasswordDto);
 
     @Mapping(source = "user.role", target = "role")
-    UserDto mapUserToUserDto(User user);
+    UserWithPasswordDto mapUserToUserWithPasswordDto(User user);
 
 }

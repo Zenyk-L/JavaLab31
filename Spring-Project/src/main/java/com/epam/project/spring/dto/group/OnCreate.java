@@ -1,4 +1,4 @@
-package com.epam.project.spring.dto.goup;
+package com.epam.project.spring.dto.group;
 
 import javax.validation.groups.Default;
 

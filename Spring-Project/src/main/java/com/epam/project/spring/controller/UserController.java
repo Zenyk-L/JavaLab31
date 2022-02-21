@@ -2,8 +2,8 @@ package com.epam.project.spring.controller;
 
 import com.epam.project.spring.dto.UserDto;
 import com.epam.project.spring.dto.UserWithPasswordDto;
-import com.epam.project.spring.dto.goup.OnCreate;
-import com.epam.project.spring.dto.goup.OnUpdate;
+import com.epam.project.spring.dto.group.OnCreate;
+import com.epam.project.spring.dto.group.OnUpdate;
 import com.epam.project.spring.service.UserService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class UserController {
     @ApiOperation("Get all users")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<UserDto> getAllUser() {
+    public List<UserWithPasswordDto> getAllUser() {
         return userService.listUsers();
     }
 
@@ -39,14 +39,14 @@ public class UserController {
     @ApiOperation("Get user by email")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{email}")
-    public UserDto getUser(@PathVariable String email) {
+    public UserWithPasswordDto getUser(@PathVariable String email) {
         return userService.getUser(email);
     }
 
     @ApiOperation("Create user")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public UserDto createUser(@RequestBody @Validated(OnCreate.class) UserWithPasswordDto userWithPasswordDto) {
+    public UserWithPasswordDto createUser(@RequestBody @Validated(OnCreate.class) UserWithPasswordDto userWithPasswordDto) {
         return userService.createUser(userWithPasswordDto);
     }
 
@@ -56,7 +56,7 @@ public class UserController {
     @ApiOperation("Update user by email")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{email}")
-    public UserDto updateUser(@PathVariable String email, @RequestBody @Validated(OnUpdate.class) UserWithPasswordDto userWithPasswordDto) {
+    public UserWithPasswordDto updateUser(@PathVariable String email, @RequestBody @Validated(OnUpdate.class) UserWithPasswordDto userWithPasswordDto) {
         return userService.updateUser(email, userWithPasswordDto);
     }
 

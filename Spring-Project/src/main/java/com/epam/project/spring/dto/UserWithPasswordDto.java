@@ -1,9 +1,11 @@
 package com.epam.project.spring.dto;
 
 import com.epam.project.spring.controller.validation.ValidRole;
-import com.epam.project.spring.dto.goup.OnCreate;
-import com.epam.project.spring.dto.goup.OnUpdate;
+import com.epam.project.spring.dto.group.OnCreate;
+import com.epam.project.spring.dto.group.OnUpdate;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -30,10 +32,12 @@ public class UserWithPasswordDto {
     @Null(message = "email should be absent", groups = OnUpdate.class)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "password shouldn't be blank", groups = OnCreate.class)
     @NotEmpty(message = "password shouldn't be empty", groups = OnUpdate.class)
     private String password;
 
+    @ApiModelProperty(allowableValues = "USER, ADMIN")
     @ValidRole
     private String role;
 
