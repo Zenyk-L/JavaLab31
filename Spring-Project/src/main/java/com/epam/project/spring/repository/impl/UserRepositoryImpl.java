@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 public class UserRepositoryImpl implements UserRepository {
@@ -33,14 +32,16 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User createUser(User user) {
-        return listUser.stream()
-                .filter(u -> u.getEmail().equals(user.getEmail()))
-                .findFirst()
-                .orElseGet(() -> {
-                    user.setId(idCount++);
-                    listUser.add(user);
-                    return user;
-                });
+
+        boolean userAlreadyExist = listUser.stream()
+                .anyMatch(u -> u.getEmail().equals(user.getEmail()));
+        if (userAlreadyExist) {
+            throw new EntityAlreadyExistException("User", user.getEmail());
+        } else {
+            user.setId(idCount++);
+            listUser.add(user);
+        }
+        return user;
     }
 
     @Override
